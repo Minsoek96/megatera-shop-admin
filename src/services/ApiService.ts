@@ -51,5 +51,30 @@ export default class ApiService {
       return data;
     };
   }
+
+  async createCategory({
+    name,
+  }: {
+    name: string;
+  }): Promise<{ id: string; name: string; hidden: boolean }> {
+    const { data } = await this.instance.post('/categories', { name });
+    return data;
+  }
+
+  async updateCategory({
+    categoryId,
+    name,
+    hidden,
+  }: {
+    categoryId: string;
+    name: string;
+    hidden: boolean;
+  }): Promise<{ id: string; name: string; hidden: boolean }> {
+    const { data } = await this.instance.patch(`/categories/${categoryId}`, {
+      name,
+      hidden,
+    });
+    return data;
+  }
 }
 export const apiService = new ApiService();
