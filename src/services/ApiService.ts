@@ -76,5 +76,15 @@ export default class ApiService {
     });
     return data;
   }
+
+  async updateOrder({
+    orderId,
+    status,
+  }: {
+    orderId: string;
+    status: string;
+  }) {
+    await this.instance.patch(`/orders/${orderId}`, { status });
+  }
 }
 export const apiService = new ApiService();
