@@ -6,4 +6,5 @@ export const STATUS_MESSAGES: Record<string, string> = {
   canceled: '취소',
 };
 
-export const example = {};
+// TODO: delete this!
+export default {};

@@ -9,6 +9,7 @@ import CategoryEditPage from './pages/CategoryEditPage';
 import OrderListPage from './pages/OrderListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import OrderEditPage from './pages/OrderEditPage';
+import ProductListPage from './pages/ProductListPage';
 
 const routes = [
   { path: '/login', element: <LoginPage /> },
@@ -23,6 +24,7 @@ const routes = [
       { path: '/orders', element: <OrderListPage /> },
       { path: '/orders/:id', element: <OrderDetailPage /> },
       { path: '/orders/:id/edit', element: <OrderEditPage /> },
+      { path: '/products', element: <ProductListPage /> },
     ],
   },
 ];
