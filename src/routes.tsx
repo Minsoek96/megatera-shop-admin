@@ -10,6 +10,7 @@ import OrderListPage from './pages/OrderListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 import OrderEditPage from './pages/OrderEditPage';
 import ProductListPage from './pages/ProductListPage';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 const routes = [
   { path: '/login', element: <LoginPage /> },
@@ -25,6 +26,7 @@ const routes = [
       { path: '/orders/:id', element: <OrderDetailPage /> },
       { path: '/orders/:id/edit', element: <OrderEditPage /> },
       { path: '/products', element: <ProductListPage /> },
+      { path: '/products/:id', element: <ProductDetailPage /> },
     ],
   },
 ];

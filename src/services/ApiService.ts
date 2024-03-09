@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ProductOption } from '../types';
 
 const { API_BASE_URL } = process.env;
 
@@ -77,14 +78,34 @@ export default class ApiService {
     return data;
   }
 
-  async updateOrder({
-    orderId,
-    status,
-  }: {
-    orderId: string;
-    status: string;
-  }) {
+  async updateOrder({ orderId, status }: { orderId: string; status: string }) {
     await this.instance.patch(`/orders/${orderId}`, { status });
+  }
+
+  async createProduct({
+    categoryId,
+    images,
+    name,
+    price,
+    options,
+    description,
+  }: {
+    categoryId: string;
+    images: { url: string }[];
+    name: string;
+    price: number;
+    options: ProductOption[];
+    description: string;
+  }) {
+    const { data } = await this.instance.post('/products', {
+      categoryId,
+      images,
+      name,
+      price,
+      options,
+      description,
+    });
+    return data;
   }
 }
 export const apiService = new ApiService();

@@ -1,5 +1,6 @@
-import { ProductSummary } from '../types';
 import useFetch from './useFetch';
+
+import { ProductSummary } from '../types';
 
 export default function useFetchProducts() {
   const {
