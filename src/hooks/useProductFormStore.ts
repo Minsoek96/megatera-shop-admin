@@ -2,9 +2,9 @@ import { container } from 'tsyringe';
 
 import { useStore } from 'usestore-ts';
 
-import ProdcutFormStore from '../stores/ProductFormStore';
+import ProductFormStore from '../stores/ProductFormStore';
 
 export default function useProductFormStore() {
-  const store = container.resolve(ProdcutFormStore);
+  const store = container.resolve(ProductFormStore);
   return useStore(store);
 }

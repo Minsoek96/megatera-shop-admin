@@ -11,6 +11,7 @@ import OrderDetailPage from './pages/OrderDetailPage';
 import OrderEditPage from './pages/OrderEditPage';
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailPage from './pages/ProductDetailPage';
+import ProductNewPage from './pages/ProductNewPage';
 
 const routes = [
   { path: '/login', element: <LoginPage /> },
@@ -27,6 +28,7 @@ const routes = [
       { path: '/orders/:id/edit', element: <OrderEditPage /> },
       { path: '/products', element: <ProductListPage /> },
       { path: '/products/:id', element: <ProductDetailPage /> },
+      { path: '/products/new', element: <ProductNewPage /> },
     ],
   },
 ];

@@ -1,14 +1,18 @@
 import { singleton } from 'tsyringe';
-import { Action, Store } from 'usestore-ts';
+
+import { Store, Action } from 'usestore-ts';
+
+import { apiService } from '../services/ApiService';
+
 import {
   Category, Image, ProductDetail, ProductOption,
 } from '../types';
-import { append, remove, update } from '../utils';
-import { apiService } from '../services/ApiService';
 
-singleton();
-Store();
-export default class ProdcutFormStore {
+import { append, remove, update } from '../utils';
+
+@singleton()
+@Store()
+export default class ProductFormStore {
   productId = '';
 
   category: Category | null = null;
@@ -31,31 +35,25 @@ export default class ProdcutFormStore {
 
   get valid() {
     const price = parseInt(this.price, 10);
-    return (
-      !!this.category?.id
-      && this.images.length
-      && this.images.every((i) => i.url)
-      && !!this.name.trim()
-      && Number.isInteger(price)
-      && this.options.every(
-        (option) => option.name
-          && option.items.length
-          && option.items.every((item) => item.name),
-      )
-      && this.description.trim()
-    );
+    return !!this.category?.id
+      && this.images.length && this.images.every((i) => i.url)
+      && !!this.name.trim() && Number.isInteger(price)
+      && this.options.every((option) => (
+        option.name && option.items.length
+          && option.items.every((item) => item.name)
+      ))
+      && this.description.trim();
   }
 
   @Action()
   reset() {
     this.productId = '';
     this.category = null;
-    this.images = [];
+    this.images = [{ url: '' }];
     this.name = '';
     this.price = '';
     this.options = [];
     this.description = '';
-    this.hidden = false;
     this.error = false;
     this.done = false;
   }
@@ -75,7 +73,7 @@ export default class ProdcutFormStore {
   }
 
   @Action()
-  changeCateogry(category: Category) {
+  changeCategory(category: Category) {
     this.category = category;
   }
 
@@ -112,7 +110,7 @@ export default class ProdcutFormStore {
     const option = {
       id: '',
       name: '',
-      items: [{ name: '', id: '', deleted: false }],
+      items: [{ id: '', name: '', deleted: false }],
       deleted: false,
     };
 
@@ -120,7 +118,7 @@ export default class ProdcutFormStore {
   }
 
   @Action()
-  removerOption(index: number) {
+  removeOption(index: number) {
     this.options = remove(this.options, index);
   }
 
@@ -133,10 +131,10 @@ export default class ProdcutFormStore {
   }
 
   @Action()
-  addOptionItem(optionIndex: number, itemIndex: number) {
+  addOptionItem(optionIndex: number) {
     this.options = update(this.options, optionIndex, (option) => ({
       ...option,
-      items: remove(option.items, itemIndex),
+      items: append(option.items, { id: '', name: '', deleted: false }),
     }));
   }
 
@@ -144,7 +142,7 @@ export default class ProdcutFormStore {
   removeOptionItem(optionIndex: number, itemIndex: number) {
     this.options = update(this.options, optionIndex, (option) => ({
       ...option,
-      itmes: remove(option.items, itemIndex),
+      items: remove(option.items, itemIndex),
     }));
   }
 
@@ -195,4 +193,22 @@ export default class ProdcutFormStore {
       this.setError();
     }
   }
+
+  // async update() {
+  //   try {
+  //     await apiService.updateProduct({
+  //       productId: this.productId,
+  //       categoryId: this.category?.id || '',
+  //       images: this.images,
+  //       name: this.name,
+  //       price: parseInt(this.price, 10),
+  //       options: this.options,
+  //       description: this.description,
+  //     });
+
+  //     this.setDone();
+  //   } catch (e) {
+  //     this.setError();
+  //   }
+  // }
 }
