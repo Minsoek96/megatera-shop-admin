@@ -1,41 +1,41 @@
 import { useEffect } from 'react';
-
 import styled from 'styled-components';
+
+import ComboBox from '../ui/Combobox';
+import TextBox from '../ui/TextBox';
+import CheckBox from '../ui/CheckBox';
+import Button from '../ui/Buttton';
+import Images from '../ui/Images';
+
+import Options from './Options';
 
 import useProductFormStore from '../../hooks/useProductFormStore';
 
 import { Category } from '../../types';
-import ComboBox from '../ui/Combobox';
-import Images from '../ui/Images';
-import TextBox from '../ui/TextBox';
-import Button from '../ui/Buttton';
-import Options from './Options';
 
 const Container = styled.div`
-  h2{
+  h2 {
     margin-bottom: 2rem;
     font-size: 2rem;
   }
 `;
 
-type ProductNewFormProps = {
+type ProductEditFormProps = {
   categories: Category[];
   onComplete: () => void;
-};
-export default function ProductNewForm({
-  categories,
-  onComplete,
-}: ProductNewFormProps) {
-  const [
-    {
-      category, images, name, price, options, description, valid, error, done,
-    },
-    store,
-  ] = useProductFormStore();
+}
+
+export default function ProductEditForm({
+  categories, onComplete,
+}: ProductEditFormProps) {
+  const [{
+    category, images, name, price, options, description, hidden,
+    valid, error, done,
+  }, store] = useProductFormStore();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await store.create();
+    await store.update();
   };
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function ProductNewForm({
 
   return (
     <Container>
-      <h2>New Product</h2>
+      <h2>Edit Product</h2>
       <form onSubmit={handleSubmit}>
         <ComboBox
           label="카테고리"
@@ -74,14 +74,18 @@ export default function ProductNewForm({
           value={description}
           onChange={(value) => store.changeDescription(value)}
         />
+        <CheckBox
+          label="감추기"
+          checked={hidden}
+          onChange={() => store.toggleHidden()}
+        />
         <Button type="submit" disabled={!valid}>
-          등록
+          변경
         </Button>
         {error && (
-          <p>상품 등록 실패</p>
+          <p>상품 수정 실패</p>
         )}
       </form>
     </Container>
   );
-  return null;
 }

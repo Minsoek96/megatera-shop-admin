@@ -107,5 +107,28 @@ export default class ApiService {
     });
     return data;
   }
+
+  async updateProduct({
+    productId,
+    categoryId,
+    images,
+    name,
+    price,
+    options,
+    description,
+  }: {
+    productId: string;
+    categoryId: string;
+    images: { url: string }[];
+    name: string;
+    price: number;
+    options: ProductOption[];
+    description: string;
+  }) {
+    const { data } = await this.instance.patch(`/products/${productId}`, {
+      categoryId, images, name, price, options, description,
+    });
+    return data;
+  }
 }
 export const apiService = new ApiService();

@@ -194,21 +194,21 @@ export default class ProductFormStore {
     }
   }
 
-  // async update() {
-  //   try {
-  //     await apiService.updateProduct({
-  //       productId: this.productId,
-  //       categoryId: this.category?.id || '',
-  //       images: this.images,
-  //       name: this.name,
-  //       price: parseInt(this.price, 10),
-  //       options: this.options,
-  //       description: this.description,
-  //     });
+  async update() {
+    try {
+      await apiService.updateProduct({
+        productId: this.productId,
+        categoryId: this.category?.id || '',
+        images: this.images,
+        name: this.name,
+        price: parseInt(this.price, 10),
+        options: this.options,
+        description: this.description,
+      });
 
-  //     this.setDone();
-  //   } catch (e) {
-  //     this.setError();
-  //   }
-  // }
+      this.setDone();
+    } catch (e) {
+      this.setError();
+    }
+  }
 }
